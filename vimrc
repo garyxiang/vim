@@ -678,10 +678,18 @@ if !has("gui_running") && $TERM is "xterm-color"
     endfor
 endif
 
+" Reset the mru file path
+let MRU_File = $HOME .'/.vim_runtime' . '/.vim_mru_files'
+
 " NERDTree
 map <F1> :execute 'NERDTreeToggle ' . getcwd()<CR>
 map <leader>d :NERDTree<CR>
 let g:NERDTreeWinSize = 25
+"Make vim's CWD sticky to NERDTree's root dir, this is extremely helpful when we wanna
+"execute sth, say, do a make. btw, Shift+C is really convenient.
+"let g:NERDTreeChDirMode = 2
+"Vim will change the current working directory whenever you open a file or change buffer or switc window
+set autochdir
 
 " TagList
 map <F2> :TlistToggle<cr>
@@ -697,13 +705,14 @@ set termencoding=utf-8
 
 " Preference
 map <leader>q :q<cr>
-set wrap
+set nowrap
 set nu
 "set fileencodings=utf-8,gbk,gb2312
 set cursorline
 
 " Maximize the current window, don't work, why?     you can use "CTRL+W o"
 map <F5> <C-W>_<C-W><Bar>
+map <F5> :NERDTree<CR>
 
 " Change the colorschem, make the bandle below easy to see
 colorscheme twilight256
@@ -713,3 +722,13 @@ set makeprg=g++\ -o\ %<\ %
 
 " Or, you can't select with left click or paste with right click
 set mouse=
+
+set cmdheight=2 "The commandbar height
+set fileformats=unix,dos
+set noerrorbells
+set novisualbell
+set nobackup
+set comments=://
+
+let g:neocomplcache_enable_at_startup=1   
+set bsdir=buffer
