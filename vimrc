@@ -188,7 +188,7 @@ if has("gui_running")
   colorscheme peaksea
   set nonu
 else
-  colorscheme zellner
+  "colorscheme zellner
   set background=dark
   set nonu
 endif
@@ -535,7 +535,7 @@ map <leader>o :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 0
-let g:miniBufExplModSelTarget = 0
+"let g:miniBufExplModSelTarget = 0
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplVSplit = 30
@@ -672,7 +672,7 @@ if !has("gui_running") && $TERM is "xterm-color"
                         \["<F2>", "\eOQ"],
                         \["<F3>", "\eOR"],
                         \["<F4>", "\eOS"],
-                        \["<F5>", "\e[15~"],
+                        \["<F5>", "\e[15^"],
                         \]
         execute "set" key."=".code
     endfor
@@ -692,12 +692,13 @@ let g:NERDTreeWinSize = 25
 set autochdir
 
 " TagList
-map <F2> :TlistToggle<cr>
+map <F2> :CMiniBufExplorer<cr>:TlistToggle<cr>
 map <leader>t :TlistToggle<cr>
+map <leader>a :TMiniBufExplorer<cr>
 
 " Single (de)comment with '//'; the decomment will only remove the leading '//', the innocent won't suffer
 map <F3> <esc>0i//<esc>
-map <silent><F4> :s/\(^\s*\)\/\//\1/<cr>  
+map <silent><F4> <esc>:s/\(^\s*\)\/\//\1/<cr>  
 
 " Fix the Chinese char display problem
 set termencoding=utf-8
@@ -732,3 +733,23 @@ set comments=://
 
 let g:neocomplcache_enable_at_startup=1   
 set bsdir=buffer
+
+"括号自动补全(NEW) 
+inoremap ( ()<Esc>:let char=" )" <CR>i
+inoremap { {}<Esc>:let char=" }" <CR>i
+inoremap [ []<Esc>:let char=" ]" <CR>i
+"inoremap < <><Esc>:let char=" >" <CR>i
+"inoremap " ""<Esc>:let char=" "" <CR>i
+"inoremap ' ''<Esc>:let char=" '" <CR>i
+
+"inoremap ( <c-r>=OpenPair('(')<CR> 
+"inoremap ) <c-r>=ClosePair(')')<CR> 
+"inoremap { <c-r>=OpenPair('{')<CR> 
+"inoremap } <c-r>=ClosePair('}')<CR> 
+"inoremap [ <c-r>=OpenPair('[')<CR> 
+"inoremap ] <c-r>=ClosePair(']')<CR> 
+"inoremap " <c-r>=OpenPair('"')<CR> 
+
+" The MBE will be open only if there are at least 2 buffers currently opened! But this will make the
+" taglist show on the left side.
+let g:miniBufExplorerMoreThanOne=2
