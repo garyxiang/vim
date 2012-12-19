@@ -1,3 +1,4 @@
+# test
 if [ "$1" == "" ]; then
   echo ""
   echo "Usage to install amix's vimrc:"
