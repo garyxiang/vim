@@ -753,3 +753,7 @@ inoremap [ []<Esc>:let char=" ]" <CR>i
 " The MBE will be open only if there are at least 2 buffers currently opened! But this will make the
 " taglist show on the left side.
 let g:miniBufExplorerMoreThanOne=2
+
+" If vim cannot locate the ctags file in current dir,it will scan above dir.
+set tags=tags;
+
