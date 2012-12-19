@@ -1,0 +1,670 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 一般设定
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设定默认解码
+set fenc=utf-8
+set fileencodings=utf-8,gb2312,gbk,gb18030
+set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk,ucs-bom,cp936
+
+" 不要使用vi的键盘模式，而是vim自己的
+set nocompatible
+
+" history文件中需要记录的行数
+set history=100
+
+" 在处理未保存或只读文件的时候，弹出确认
+set confirm
+
+" 侦测文件类型
+filetype on
+
+" 载入文件类型插件
+filetype plugin on
+
+" 为特定文件类型载入相关缩进文件
+filetype indent on
+
+" 保存全局变量
+set viminfo+=!
+
+" 带有如下符号的单词不要被换行分割
+set iskeyword+=_,$,@,%,#,-
+
+" 语法高亮
+syntax on
+
+" 高亮字符，让其不受100列限制
+:highlight OverLength ctermbg=red ctermfg=white guibg=red guifg=white
+:match OverLength '\%101v.*'
+
+" 状态行颜色
+highlight StatusLine guifg=SlateBlue guibg=Yellow
+highlight StatusLineNC guifg=Gray guibg=White
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文件设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 不要备份文件（根据自己需要取舍）
+set nobackup
+
+" 不要生成swap文件，当buffer被丢弃的时候隐藏它
+setlocal noswapfile
+set bufhidden=hide
+
+" 字符间插入的像素行数目
+set linespace=0
+
+" 增强模式中的命令行自动完成操作
+set wildmenu
+
+" 在状态行上显示光标所在位置的行号和列号
+set ruler
+set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
+
+" 命令行（在状态行下）的高度，默认为1，这里是2
+set cmdheight=2
+
+" 使回格键（backspace）正常处理indent, eol, start等
+set backspace=2
+
+" 允许backspace和光标键跨越行边界
+set whichwrap+=<,>,h,l
+
+" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+set mouse=a
+set selection=exclusive
+set selectmode=mouse,key
+
+" 启动的时候不显示那个援助索马里儿童的提示
+set shortmess=atI
+
+" 通过使用: commands命令，告诉我们文件的哪一行被改变过
+set report=0
+
+" 不让vim发出讨厌的滴滴声
+set noerrorbells
+
+" 在被分割的窗口间显示空白，便于阅读
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 搜索和匹配
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 高亮显示匹配的括号
+set showmatch
+
+" 匹配括号高亮的时间（单位是十分之一秒）
+set matchtime=5
+
+" 在搜索的时候忽略大小写
+set ignorecase
+
+" 不要高亮被搜索的句子（phrases）
+set nohlsearch
+
+" 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
+set incsearch
+
+" 输入:set list命令是应该显示些啥？
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
+
+" 光标移动到buffer的顶部和底部时保持3行距离
+set scrolloff=3
+
+" 不要闪烁
+set novisualbell
+
+" 我的状态行显示的内容（包括文件类型和解码）
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+
+" 总是显示状态行
+" "set laststatus
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文本格式和排版
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 自动格式化
+set formatoptions=tcrqn
+
+" 继承前一行的缩进方式，特别适用于多行注释
+set autoindent
+
+" 为C程序提供自动缩进
+set smartindent
+
+" 使用C样式的缩进
+set cindent
+
+" 制表符为4
+set tabstop=4
+
+" 统一缩进为4
+set softtabstop=4
+set shiftwidth=4
+
+" 不要用空格代替制表符
+set noexpandtab
+
+" 不要换行
+set wrap
+set nu
+" 在行和段开始处使用制表符
+set smarttab
+set smartcase
+set showcmd
+set hid
+set showmatch
+"set cursorline
+
+" Fix <Enter> for comment
+set fo+=cr
+" Session options
+set sessionoptions=curdir,buffers,tabpages
+set foldcolumn=2
+"让vimrc修改后自动生效
+"autocmd! bufwritepost .vimrc source ~/.vimrc
+"使当前工作目能自动切换正在浏览或者打开文件的目录
+"autocmd BufEnter * cd %:p:h
+"处理pythonic style
+"autocmd FileType python
+"set et nu sw=4 ts=4 list 
+"或者 set autochdir
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autocommands
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 只在下列文件类型被侦测到的时候显示行号，普通文本文件不显示
+
+if has("autocmd")
+	" autocmd CursorHold * silent! exe printf( 'match Underlined /\<%s\>/', expand( '<cword>') )
+:autocmd CursorMoved * silent! exe printf( 'match IncSearch /\<%s\>/', expand( '<cword>') ) 
+   autocmd FileType xml,html,c,cs,java,perl,shell,bash,cpp,python,vim,php,ruby set number
+   autocmd FileType xml,html vmap <C-o> <ESC>'<i<!--<ESC>o<ESC>'>o-->
+   autocmd FileType java,c,cpp,cs vmap <C-o> <ESC>'<o/*<ESC>'>o*/
+   autocmd FileType html,text,php,vim,c,java,xml,bash,shell,perl,python setlocal textwidth=100
+   autocmd Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
+   autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endif
+endif " has("autocmd")
+
+" 用空格键来开关折叠
+set foldenable
+set foldmethod=manual
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""" 
+"     键位绑定 Keys Bindings 
+" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""" 
+let mapleader = "."
+" 绑定自动补全的快捷键<C-X><C-O>到<leader>; 
+imap <leader>; <C-X><C-O> 
+map <C-F8> :call FormartSrc()<CR>   
+map <F5> :call CompileRun()<CR> 
+map <C-F5> :call Debug()<CR> 
+"map <F3> :Tlist<cr> 
+map <F4> :NERDTreeToggle<cr> 
+map <F6> :make<cr> 
+map <C-F6> :make clean<cr>
+
+" Make <Backspace> act as <Delete> in Visual mode? 
+vmap <BS> x 
+ 
+" CTRL-C and CTRL-Insert are Copy 
+vmap <C-C> "+yi 
+imap <C-V> <esc>"+gPi 
+ 
+" Use CTRL-F for omni completion 
+imap <C-F> <C-X><C-O> 
+" < & > to indent blocks 
+vmap < <gv 
+vmap > >gv 
+
+" Switch off fucked 'Replace mode' 
+imap <Ins> <Esc>wq 
+
+" bail out if this isn't wanted (mrsvim.vim uses this). 
+if exists("g:skip_loading_mswin") && g:skip_loading_mswin 
+finish 
+endif 
+
+" set the 'cpoptions' to its Vim default 
+if 1 " only do this when compiled with expression evaluation 
+let s:save_cpo = &cpoptions 
+endif 
+set cpo&vim 
+
+" set 'selection', 'selectmode', 'mousemodel' and 'keymodel' for MS-Windows 
+"behave mswin 
+
+" backspace and cursor keys wrap to previous/next line 
+set backspace=indent,eol,start whichwrap+=<,>,[,] 
+
+" backspace in Visual mode deletes selection 
+vnoremap <BS> d 
+
+" CTRL-X and SHIFT-Del are Cut 
+"vnoremap <C-X> "+x 
+"vnoremap <S-Del> "+x 
+
+" CTRL-C and CTRL-Insert are Copy 
+"vnoremap <C-C> "+y 
+"vnoremap <C-Insert> "+y 
+
+" CTRL-V and SHIFT-Insert are Paste 
+"map <C-V>   "+gP 
+"map <S-Insert>   "+gP 
+
+"cmap <C-V>   <C-R>+ 
+"cmap <S-Insert>   <C-R>+ 
+
+" Pasting blockwise and linewise selections is not possible in Insert and 
+" Visual mode without the +virtualedit feature. They are pasted as if they 
+" were characterwise instead. 
+" Uses the paste.vim autoload script. 
+
+"exe 'inoremap <script> <C-V>' paste#paste_cmd['i'] 
+"exe 'vnoremap <script> <C-V>' paste#paste_cmd['v'] 
+
+"imap <S-Insert>   <C-V> 
+"vmap <S-Insert>   <C-V> 
+
+" Use CTRL-Q to do what CTRL-V used to do 
+"noremap <C-Q>   <C-V> 
+
+" Use CTRL-S for saving, also in Insert mode 
+noremap <C-S>   :update<CR> 
+vnoremap <C-S>   <C-C>:update<CR> 
+inoremap <C-S>   <C-O>:update<CR> 
+
+" For CTRL-V to work autoselect must be off. 
+" On Unix we have two selections, autoselect can be used. 
+if !has("unix") 
+set guioptions-=a 
+endif 
+
+" CTRL-Z is Undo; not in cmdline though 
+noremap <C-Z> u 
+inoremap <C-Z> <C-O>u 
+
+" CTRL-Y is Redo (although not repeat); not in cmdline though 
+noremap <C-Y> <C-R> 
+inoremap <C-Y> <C-O><C-R> 
+
+" Alt-Space is System menu 
+if has("gui") 
+noremap <M-Space> :simalt ~<CR> 
+inoremap <M-Space> <C-O>:simalt ~<CR> 
+cnoremap <M-Space> <C-C>:simalt ~<CR> 
+endif 
+
+" CTRL-A is Select all 
+noremap <C-A> gggH<C-O>G 
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G 
+cnoremap <C-A> <C-C>gggH<C-O>G 
+onoremap <C-A> <C-C>gggH<C-O>G 
+snoremap <C-A> <C-C>gggH<C-O>G 
+xnoremap <C-A> <C-C>ggVG 
+
+" CTRL-Tab is Next window 
+noremap <C-Tab> <C-W>w 
+inoremap <C-Tab> <C-O><C-W>w 
+cnoremap <C-Tab> <C-C><C-W>w 
+onoremap <C-Tab> <C-C><C-W>w 
+
+" CTRL-F4 is Close window 
+noremap <C-F4> <C-W>c 
+inoremap <C-F4> <C-O><C-W>c 
+cnoremap <C-F4> <C-C><C-W>c 
+onoremap <C-F4> <C-C><C-W>c 
+
+"ctags配置
+map <F12> :call Do_CsTag()<CR>
+function Do_CsTag()
+    let dir = getcwd()
+    if filereadable("tags")
+        if(g:iswindows==1)
+            let tagsdeleted=delete(dir."\\"."tags")
+        else
+            let tagsdeleted=delete("./"."tags")
+        endif
+        if(tagsdeleted!=0)
+            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
+            return
+        endif
+    endif
+    if has("cscope")
+        silent! execute "cs kill -1"
+    endif
+    if filereadable("cscope.files")
+        if(g:iswindows==1)
+            let csfilesdeleted=delete(dir."\\"."cscope.files")
+        else
+            let csfilesdeleted=delete("./"."cscope.files")
+        endif
+        if(csfilesdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
+            return
+        endif
+    endif
+    if filereadable("cscope.out")
+        if(g:iswindows==1)
+            let csoutdeleted=delete(dir."\\"."cscope.out")
+        else
+            let csoutdeleted=delete("./"."cscope.out")
+        endif
+        if(csoutdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
+            return
+        endif
+    endif
+    if(executable('ctags'))
+        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
+        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+    endif
+    if(executable('cscope') && has("cscope") )
+        if(g:iswindows!=1)
+            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+        else
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+        endif
+        silent! execute "!cscope -b"
+        execute "normal :"
+        if filereadable("cscope.out")
+            execute "cs add cscope.out"
+        endif
+    endif
+endfunction 
+
+
+" 用cscope支持
+set csprg=/usr/bin/cscope 
+let Tlist_Ctags_Cmd='/usr/bin/ctags' 
+let Tlist_Show_One_File=1 
+let Tlist_Exit_OnlyWindow=1 
+let Tlist_Use_Right_Window=1
+let Tlist_Show_Menu=1
+let Tlist_Process_File_Always=1
+"默认打开Taglist 
+"let Tlist_Auto_Open=1 
+nmap <silent> <leader>tl :Tlist<cr>
+
+" omni completion(全能补全)
+" 为支持C++的全能补全，需安装插件: OmniCppComplete
+" 并且生成tag文件的命令是(src为源文件目录): ctags -R --c++-kinds=+p --fields=+iaS --extra=+q src
+" 因为在对C++文件进行补全时，OmniCppComplete插件需要tag文件中包含C++的额外信息
+" C++的补全连”CTRL-X CTRL-O“都不必输入呵呵，测试通过
+set completeopt=longest,menu " 只在下拉菜单中显示匹配项目，并且会自动插入所有匹配项目的相同文本
+inoremap <C-J>  <C-X><C-O>
+" generic completion(其他补全方式)
+" 文件名补全
+inoremap <C-F>  <C-X><C-F>
+" 宏定义补全
+inoremap <C-D>  <C-X><C-D>
+" 整行补全
+inoremap <C-L>  <C-X><C-L>
+let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
+"设置tags目录，可以根据自己的设置自动调整 
+"set tags+=~/.vim/tags
+"set tags+=~/.vim/cpptags 
+
+
+" WinManager设置
+" 这里可以设置为多个窗口, 如'FileExplorer|BufExplorer|TagList'
+let g:winManagerWindowLayout='BufExplorer,FileExplorer|TagList'
+"只剩一个窗口时, 退出vim.
+let g:persistentBehaviour=0
+let g:winManagerWidth=20
+let g:defaultExplorer=2
+nmap wm :WMToggle<cr>
+nmap <silent> <leader>ft :FirstExplorerWindow<cr>
+nmap <silent> <leader>bt :BottomExplorerWindow<cr>
+
+" minibufexpl插件的一般设置
+let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplModSelTarget = 1
+"实现<C-Tab>     向前循环切换到每个buffer上,并在当前窗口打开
+let g:miniBufExplMapCTabSwitchBufs = 1
+"<C-S-Tab>     向后循环切换到每个buffer上,并在当前窗口打开
+"可以用<C-h,j,k,l>切换到上下左右的窗口中去
+let g:miniBufExplMapWindowNavVim = 1
+map <Leader>b :MiniBufExplorer<cr>
+
+" SuperTab
+" 记住上次的补全方式，直到按ESC退出插入模式为止
+let g:SuperTabRetainCompletionType = 2
+" 缺省的补全方式(设置为全能补全)
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+
+"使用<leader>e打开当前文件同目录中的文件
+if has("unix")
+map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+else
+map ,e :e <C-R>=expand("%:p:h") . "\" <CR>
+endif
+
+let NERDShutUp=1 
+
+colo darkblue 
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""" 
+"     实用函数定义 Useful functions 
+" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""" 
+function MoveTabLeft() 
+    let current_tab = tabpagenr() 
+   if current_tab > 1 
+       let current_tab = current_tab - 2 
+       execute 'tabmove' current_tab 
+    endif 
+endfunction 
+ 
+function MoveTabRight() 
+    let current_tab = tabpagenr() 
+    execute 'tabmove' current_tab 
+endfunction 
+ 
+ 
+ 
+func FormartSrc() 
+        exec "w" 
+        "C程序,Perl程序,Python程序 
+        if &filetype == 'c' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'cpp' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'perl' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'py' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        "Java程序 
+        elseif &filetype == 'java' 
+                exec "!astyle --style=java --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'jsp' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'xml' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'html' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        elseif &filetype == 'htm' 
+                exec "!astyle --style=ansi --suffix=none %" 
+                exec "e! %" 
+        endif 
+endfunc 
+" 结束定义FormartSrc 
+ 
+" 定义CompileRun函数，用来调用进行编译和运行 
+func CompileRun() 
+        exec "w" 
+        "C程序 
+        if &filetype == 'c' 
+                exec "!gcc % -g -o %<" 
+                exec "!./%<" 
+        elseif &filetype == 'cpp' 
+                exec "!g++ % -g -o %<" 
+                exec "!./%<" 
+        "Java程序 
+        elseif &filetype == 'java' 
+                exec "!javac %" 
+                exec "!java %<" 
+        "Perl程序 
+        elseif &filetype == 'pl' 
+                exec "!perl %<" 
+        "Python程序 
+        elseif &filetype == 'py' 
+                exec "!python %<CR>" 
+        "Tex文档 
+        elseif &filetype == 'tex' 
+                exec "!latex %" 
+                exec "!dvipdf %<.dvi" 
+                exec "!evince %<.pdf" 
+        endif 
+endfunc 
+"结束定义CompileRun 
+ 
+"定义Debug函数，用来调试程序 
+func Debug() 
+        exec "w" 
+        "C程序 
+        if &filetype == 'c' 
+                exec "!gcc % -g -o %<" 
+                exec "!clewn -va %<.c" 
+        elseif &filetype == 'cpp' 
+                exec "!gcc % -g -o %<" 
+                exec "!gdb %<" 
+        "Java程序 
+        elseif &filetype == 'java' 
+                exec "!javac %" 
+                exec "!jdb %<" 
+        endif 
+endfunc 
+"结束定义Debug 
+ 
+ 
+"设置Session 
+function! GetMySession(spath, ssname) 
+        if a:ssname == 0 
+                let a:sname = "" 
+        else 
+                let a:sname = "-".a:ssname 
+        endif 
+                execute "source $".a:spath."/session".a:sname.".vim" 
+                execute "rviminfo $".a:spath."/session".a:sname.".viminfo" 
+                execute "echo \"Load Success\: $".a:spath."/session".a:sname.".vim\"" 
+endfunction 
+  
+function! SetMySession(spath, ssname) 
+        if a:ssname == 0 
+                let a:sname = "" 
+        else 
+                let a:sname = "-".a:ssname 
+        endif 
+                execute "cd ".a:spath 
+                execute "mksession! ".a:spath."/session".a:sname.".vim" 
+                execute "wviminfo! ".a:spath."/session".a:sname.".viminfo" 
+                execute "echo \"Save Success\: ".a:spath."/session".a:sname.".vim\"" 
+endfunction 
+ 
+
+"括号自动补全(NEW) 
+"inoremap ( ()<Esc>:let char=" )" <CR>i
+"inoremap { {}<Esc>:let char=" }" <CR>i
+"inoremap [ []<Esc>:let char=" ]" <CR>i
+"inoremap < <><Esc>:let char=" >" <CR>i
+"inoremap " ""<Esc>:let char=" "" <CR>i
+"inoremap ' ''<Esc>:let char=" '" <CR>i
+
+"inoremap ( <c-r>=OpenPair('(')<CR> 
+"inoremap ) <c-r>=ClosePair(')')<CR> 
+"inoremap { <c-r>=OpenPair('{')<CR> 
+"inoremap } <c-r>=ClosePair('}')<CR> 
+"inoremap [ <c-r>=OpenPair('[')<CR> 
+"inoremap ] <c-r>=ClosePair(']')<CR> 
+"inoremap " <c-r>=OpenPair('"')<CR> 
+
+" just for xml document, but need not for now. 
+"inoremap < <c-r>=OpenPair('<')<CR> 
+"inoremap > <c-r>=ClosePair('>')<CR> 
+function! OpenPair(char) 
+	let PAIRs = { 
+                \ '{' : '}', 
+                \ '[' : ']', 
+                \ '(' : ')', 
+                \ '<' : '>', 
+                \ '"' : '"' 
+                \} 
+    if line('$')>2000 
+        let line = getline('.') 
+ 
+        let txt = strpart(line, col('.')-1) 
+    else 
+        let lines = getline(1,line('$')) 
+        let line="" 
+        for str in lines 
+            let line = line . str . "\n" 
+        endfor 
+ 
+        let blines = getline(line('.')-1, line("$")) 
+        let txt = strpart(getline("."), col('.')-1) 
+        for str in blines 
+            let txt = txt . str . "\n" 
+        endfor 
+    endif 
+    let oL = len(split(line, a:char, 1))-1 
+    let cL = len(split(line, PAIRs[a:char], 1))-1 
+ 
+    let ol = len(split(txt, a:char, 1))-1 
+    let cl = len(split(txt, PAIRs[a:char], 1))-1 
+ 
+    if oL>=cL || (oL<cL && ol>=cl)
+        return a:char.PAIRs[a:char] . "\<Left>" 
+    else 
+        return a:char 
+    endif 
+endfunction 
+function! ClosePair(char) 
+    if getline('.')[col('.')-1] == a:char 
+        return "\<Right>" 
+    else 
+        return a:char 
+    endif 
+endf 
+ 
+func AutoSpace() 
+ inoremap , ,<space>
+" inoremap ( (<space>
+" inoremap ) )<ESC>i<space><ESC>la
+ inoremap ; ;<space>
+ inoremap <= <space><=<space>
+ inoremap *= <space>*=<space>
+ inoremap /= <space>/=<space>
+ inoremap >> <space>>><space>
+ inoremap << <space><<<space>
+ inoremap >= <space>>=<space>
+ inoremap == <space>==<space>
+ inoremap += <space>+=<space>
+ inoremap && <space>&&<space>
+ inoremap != <space>!=<space>
+" map <silent> # :<esc>i<esc>i# 
+endf

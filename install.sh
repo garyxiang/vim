@@ -13,4 +13,5 @@ let $VIMRUNTIME="~/.vim_runtime/vimruntime"
 set runtimepath=~/.vim_runtime,~/.vim_runtime/after,\$VIMRUNTIME
 source ~/.vim_runtime/vimrc
 helptags ~/.vim_runtime/doc' > ~/.vimrc
+echo 'alias vi="~/vim_runtime/vim73"' >> ~/.bash_profile
 echo "Installed amix's vim configuration successfully! Enjoy :)"
