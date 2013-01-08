@@ -85,8 +85,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
+
+" call etc_vimrc which if from 103's /etc/vimrc
 source ~/.vim_runtime/etc_vimrc
+
 " Pathogen
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
@@ -694,13 +696,16 @@ let g:NERDTreeWinSize = 25
 set autochdir
 
 " TagList
-map <F2> :CMiniBufExplorer<cr>:TlistToggle<cr>
 map <leader>t :TlistToggle<cr>
-map <leader>a :TMiniBufExplorer<cr>
 
-" Single (de)comment with '//'; the decomment will only remove the leading '//', the innocent won't suffer
+" toggle minibuffer and jump in, with CTRL+L
+map <leader>z :TMiniBufExplorer<cr>
+"map <leader>z :TMiniBufExplorer<cr><C-L>
+map <F2> :CMiniBufExplorer<cr>:TlistToggle<cr>
+
+" Single line (de)comment with '//'; the decomment will only remove the leading '//', the innocent won't suffer
 map <F3> <esc>0i//<esc>
-map <silent><F4> <esc>:s/\(^\s*\)\/\//\1/<cr>  
+map <silent><F4> <esc>:s/\(^\s*\)\/\//\1/<cr><esc>
 
 " Fix the Chinese char display problem
 set termencoding=utf-8
@@ -737,9 +742,9 @@ let g:neocomplcache_enable_at_startup=1
 set bsdir=buffer
 
 "括号自动补全(NEW) 
-inoremap ( ()<Esc>:let char=" )" <CR>i
-inoremap { {}<Esc>:let char=" }" <CR>i
-inoremap [ []<Esc>:let char=" ]" <CR>i
+"inoremap ( ()<Esc>:let char=" )" <CR>i
+"inoremap { {}<Esc>:let char=" }" <CR>i
+"inoremap [ []<Esc>:let char=" ]" <CR>i
 "inoremap < <><Esc>:let char=" >" <CR>i
 "inoremap " ""<Esc>:let char=" "" <CR>i
 "inoremap ' ''<Esc>:let char=" '" <CR>i
@@ -752,10 +757,119 @@ inoremap [ []<Esc>:let char=" ]" <CR>i
 "inoremap ] <c-r>=ClosePair(']')<CR> 
 "inoremap " <c-r>=OpenPair('"')<CR> 
 
-" The MBE will be open only if there are at least 2 buffers currently opened! But this will make the
+" The MBE will be open only if there are at least 2 buffers currently opened! But this will jake the
 " taglist show on the left side.
 let g:miniBufExplorerMoreThanOne=2
 
 " If vim cannot locate the ctags file in current dir,it will scan above dir.
 set tags=tags;
+
+" a.vim, swith between h/cpp,c, see a.vim for details.
+map <leader>a :A<cr>
+
+"Remeber open buffers on close. vim will remember the buffer list.
+"set viminfo^=%
+
+"Remap VIM 1, 1 will jump to the end of line, btw,0 will jump to the beginning
+map 1 $
+
+"DO not expandtab in makefile
+autocmd FileType make setlocal noexpandtab
+
+"NERDTreeIgnore is an array of regular expressions that match the files you want to exclude
+let NERDTreeIgnore = ['\.o$', '\.py$']
+
+"ctrl+b  save current file and do :make
+noremap <C-B> <esc>:w<cr>:make<cr>
+"shift+B  save all and do :!make
+noremap <S-B> <esc>:wa<cr>:!make<cr>
+
+
+" For local replace
+noremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+" For global replace
+noremap gR gD:%s/<C-R>///gc<left><left><left>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+" header guard helper
+"function! s:insert_gates()
+function! Insert_gates()
+    let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+    execute "normal! ggO#ifndef " . gatename
+    execute "normal! o#define " . gatename . " " 
+    execute "normal! Go#endif /* " . gatename . " */"  
+    normal! kk
+endfunction
+"autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+autocmd BufNewFile *.{h,hpp} call Insert_gates()
+noremap <leader>h :call Insert_gates()<cr>
+
+" Class helpr : http://vim.wikia.com/wiki/Automatic_insertion_of_C/C%2B%2B_header_gates
+function! New_Class_C(l_class_name, u_class_name)
+   insert
+#include "l_class_name.h"
+
+u_class_name::u_class_name(
+)
+{
+   ;
+}
+
+u_class_name::~u_class_name(
+)
+{
+   ;
+}
+.
+   %s/l_class_name/\=a:l_class_name/g
+   %s/u_class_name/\=a:u_class_name/g
+endfunction
+
+function! New_Class_H(l_class_name, u_class_name)
+   insert
+
+class u_class_name {
+public:
+   u_class_name();
+   ~u_class_name();
+};
+
+.
+   %s/u_class_name/\=a:u_class_name/g
+   call Insert_gates()
+endfunction
+
+function! New_Class()
+   let class_name = expand("%:r")
+   let file_type = expand("%:e")
+   let l_class_name = tolower(class_name)
+   let u_class_name = toupper(class_name)
+
+   if file_type =~# "c"
+      call New_Class_C(l_class_name, u_class_name)
+   else
+      call New_Class_H(l_class_name, u_class_name)
+   endif
+endfunction
+
 

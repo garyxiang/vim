@@ -1,156 +1,176 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ò»°ãÉè¶¨
+" Gary's preference 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Éè¶¨Ä¬ÈÏ½âÂë
+set nolist
+if MySys() == "windows"
+    " Fast editing of the .vimrc
+    map <leader>e :e! ~/_vim_runtime/etc_vimrc<cr>
+
+    " When vimrc is edited, reload it
+    autocmd! bufwritepost vimrc source ~/_vim_runtime/etc_vimrc
+else
+    " Fast editing of the .vimrc
+    map <leader>r :e! ~/.vim_runtime/etc_vimrc<cr>
+
+    " When etc_vimrc is edited, reload etc_vimrc and vimrc
+    autocmd! bufwritepost etc_vimrc source ~/.vim_runtime/etc_vimrc
+    autocmd! bufwritepost etc_vimrc source ~/.vim_runtime/vimrc
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ä¸€èˆ¬è®¾å®š
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" è®¾å®šé»˜è®¤è§£ç 
 set fenc=utf-8
 set fileencodings=utf-8,gb2312,gbk,gb18030
 set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
 let &termencoding=&encoding
 set fileencodings=utf-8,gbk,ucs-bom,cp936
 
-" ²»ÒªÊ¹ÓÃviµÄ¼üÅÌÄ£Ê½£¬¶øÊÇvim×Ô¼ºµÄ
+" ä¸è¦ä½¿ç”¨viçš„é”®ç›˜æ¨¡å¼ï¼Œè€Œæ˜¯vimè‡ªå·±çš„
 set nocompatible
 
-" historyÎÄ¼şÖĞĞèÒª¼ÇÂ¼µÄĞĞÊı
+" historyæ–‡ä»¶ä¸­éœ€è¦è®°å½•çš„è¡Œæ•°
 set history=100
 
-" ÔÚ´¦ÀíÎ´±£´æ»òÖ»¶ÁÎÄ¼şµÄÊ±ºò£¬µ¯³öÈ·ÈÏ
+" åœ¨å¤„ç†æœªä¿å­˜æˆ–åªè¯»æ–‡ä»¶çš„æ—¶å€™ï¼Œå¼¹å‡ºç¡®è®¤
 set confirm
 
-" Õì²âÎÄ¼şÀàĞÍ
+" ä¾¦æµ‹æ–‡ä»¶ç±»å‹
 filetype on
 
-" ÔØÈëÎÄ¼şÀàĞÍ²å¼ş
+" è½½å…¥æ–‡ä»¶ç±»å‹æ’ä»¶
 filetype plugin on
 
-" ÎªÌØ¶¨ÎÄ¼şÀàĞÍÔØÈëÏà¹ØËõ½øÎÄ¼ş
+" ä¸ºç‰¹å®šæ–‡ä»¶ç±»å‹è½½å…¥ç›¸å…³ç¼©è¿›æ–‡ä»¶
 filetype indent on
 
-" ±£´æÈ«¾Ö±äÁ¿
+" ä¿å­˜å…¨å±€å˜é‡
 set viminfo+=!
 
-" ´øÓĞÈçÏÂ·ûºÅµÄµ¥´Ê²»Òª±»»»ĞĞ·Ö¸î
+" å¸¦æœ‰å¦‚ä¸‹ç¬¦å·çš„å•è¯ä¸è¦è¢«æ¢è¡Œåˆ†å‰²
 set iskeyword+=_,$,@,%,#,-
 
-" Óï·¨¸ßÁÁ
+" è¯­æ³•é«˜äº®
 syntax on
 
-" ¸ßÁÁ×Ö·û£¬ÈÃÆä²»ÊÜ100ÁĞÏŞÖÆ
+" é«˜äº®å­—ç¬¦ï¼Œè®©å…¶ä¸å—100åˆ—é™åˆ¶
 :highlight OverLength ctermbg=red ctermfg=white guibg=red guifg=white
 :match OverLength '\%101v.*'
 
-" ×´Ì¬ĞĞÑÕÉ«
+" çŠ¶æ€è¡Œé¢œè‰²
 highlight StatusLine guifg=SlateBlue guibg=Yellow
 highlight StatusLineNC guifg=Gray guibg=White
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ÎÄ¼şÉèÖÃ
+" æ–‡ä»¶è®¾ç½®
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ²»Òª±¸·İÎÄ¼ş£¨¸ù¾İ×Ô¼ºĞèÒªÈ¡Éá£©
+" ä¸è¦å¤‡ä»½æ–‡ä»¶ï¼ˆæ ¹æ®è‡ªå·±éœ€è¦å–èˆï¼‰
 set nobackup
 
-" ²»ÒªÉú³ÉswapÎÄ¼ş£¬µ±buffer±»¶ªÆúµÄÊ±ºòÒş²ØËü
+" ä¸è¦ç”Ÿæˆswapæ–‡ä»¶ï¼Œå½“bufferè¢«ä¸¢å¼ƒçš„æ—¶å€™éšè—å®ƒ
 setlocal noswapfile
 set bufhidden=hide
 
-" ×Ö·û¼ä²åÈëµÄÏñËØĞĞÊıÄ¿
+" å­—ç¬¦é—´æ’å…¥çš„åƒç´ è¡Œæ•°ç›®
 set linespace=0
 
-" ÔöÇ¿Ä£Ê½ÖĞµÄÃüÁîĞĞ×Ô¶¯Íê³É²Ù×÷
+" å¢å¼ºæ¨¡å¼ä¸­çš„å‘½ä»¤è¡Œè‡ªåŠ¨å®Œæˆæ“ä½œ
 set wildmenu
 
-" ÔÚ×´Ì¬ĞĞÉÏÏÔÊ¾¹â±êËùÔÚÎ»ÖÃµÄĞĞºÅºÍÁĞºÅ
+" åœ¨çŠ¶æ€è¡Œä¸Šæ˜¾ç¤ºå…‰æ ‡æ‰€åœ¨ä½ç½®çš„è¡Œå·å’Œåˆ—å·
 set ruler
 set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 
-" ÃüÁîĞĞ£¨ÔÚ×´Ì¬ĞĞÏÂ£©µÄ¸ß¶È£¬Ä¬ÈÏÎª1£¬ÕâÀïÊÇ2
+" å‘½ä»¤è¡Œï¼ˆåœ¨çŠ¶æ€è¡Œä¸‹ï¼‰çš„é«˜åº¦ï¼Œé»˜è®¤ä¸º1ï¼Œè¿™é‡Œæ˜¯2
 set cmdheight=2
 
-" Ê¹»Ø¸ñ¼ü£¨backspace£©Õı³£´¦Àíindent, eol, startµÈ
+" ä½¿å›æ ¼é”®ï¼ˆbackspaceï¼‰æ­£å¸¸å¤„ç†indent, eol, startç­‰
 set backspace=2
 
-" ÔÊĞíbackspaceºÍ¹â±ê¼ü¿çÔ½ĞĞ±ß½ç
+" å…è®¸backspaceå’Œå…‰æ ‡é”®è·¨è¶Šè¡Œè¾¹ç•Œ
 set whichwrap+=<,>,h,l
 
-" ¿ÉÒÔÔÚbufferµÄÈÎºÎµØ·½Ê¹ÓÃÊó±ê£¨ÀàËÆofficeÖĞÔÚ¹¤×÷ÇøË«»÷Êó±ê¶¨Î»£©
+" å¯ä»¥åœ¨bufferçš„ä»»ä½•åœ°æ–¹ä½¿ç”¨é¼ æ ‡ï¼ˆç±»ä¼¼officeä¸­åœ¨å·¥ä½œåŒºåŒå‡»é¼ æ ‡å®šä½ï¼‰
 set mouse=a
 set selection=exclusive
 set selectmode=mouse,key
 
-" Æô¶¯µÄÊ±ºò²»ÏÔÊ¾ÄÇ¸öÔ®ÖúË÷ÂíÀï¶ùÍ¯µÄÌáÊ¾
+" å¯åŠ¨çš„æ—¶å€™ä¸æ˜¾ç¤ºé‚£ä¸ªæ´åŠ©ç´¢é©¬é‡Œå„¿ç«¥çš„æç¤º
 set shortmess=atI
 
-" Í¨¹ıÊ¹ÓÃ: commandsÃüÁî£¬¸æËßÎÒÃÇÎÄ¼şµÄÄÄÒ»ĞĞ±»¸Ä±ä¹ı
+" é€šè¿‡ä½¿ç”¨: commandså‘½ä»¤ï¼Œå‘Šè¯‰æˆ‘ä»¬æ–‡ä»¶çš„å“ªä¸€è¡Œè¢«æ”¹å˜è¿‡
 set report=0
 
-" ²»ÈÃvim·¢³öÌÖÑáµÄµÎµÎÉù
+" ä¸è®©vimå‘å‡ºè®¨åŒçš„æ»´æ»´å£°
 set noerrorbells
 
-" ÔÚ±»·Ö¸îµÄ´°¿Ú¼äÏÔÊ¾¿Õ°×£¬±ãÓÚÔÄ¶Á
+" åœ¨è¢«åˆ†å‰²çš„çª—å£é—´æ˜¾ç¤ºç©ºç™½ï¼Œä¾¿äºé˜…è¯»
 set fillchars=vert:\ ,stl:\ ,stlnc:\
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ËÑË÷ºÍÆ¥Åä
+" æœç´¢å’ŒåŒ¹é…
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ¸ßÁÁÏÔÊ¾Æ¥ÅäµÄÀ¨ºÅ
+" é«˜äº®æ˜¾ç¤ºåŒ¹é…çš„æ‹¬å·
 set showmatch
 
-" Æ¥ÅäÀ¨ºÅ¸ßÁÁµÄÊ±¼ä£¨µ¥Î»ÊÇÊ®·ÖÖ®Ò»Ãë£©
+" åŒ¹é…æ‹¬å·é«˜äº®çš„æ—¶é—´ï¼ˆå•ä½æ˜¯ååˆ†ä¹‹ä¸€ç§’ï¼‰
 set matchtime=5
 
-" ÔÚËÑË÷µÄÊ±ºòºöÂÔ´óĞ¡Ğ´
+" åœ¨æœç´¢çš„æ—¶å€™å¿½ç•¥å¤§å°å†™
 set ignorecase
 
-" ²»Òª¸ßÁÁ±»ËÑË÷µÄ¾ä×Ó£¨phrases£©
+" ä¸è¦é«˜äº®è¢«æœç´¢çš„å¥å­ï¼ˆphrasesï¼‰
 set nohlsearch
 
-" ÔÚËÑË÷Ê±£¬ÊäÈëµÄ´Ê¾äµÄÖğ×Ö·û¸ßÁÁ£¨ÀàËÆfirefoxµÄËÑË÷£©
+" åœ¨æœç´¢æ—¶ï¼Œè¾“å…¥çš„è¯å¥çš„é€å­—ç¬¦é«˜äº®ï¼ˆç±»ä¼¼firefoxçš„æœç´¢ï¼‰
 set incsearch
 
-" ÊäÈë:set listÃüÁîÊÇÓ¦¸ÃÏÔÊ¾Ğ©É¶£¿
+" è¾“å…¥:set listå‘½ä»¤æ˜¯åº”è¯¥æ˜¾ç¤ºäº›å•¥ï¼Ÿ
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 
-" ¹â±êÒÆ¶¯µ½bufferµÄ¶¥²¿ºÍµ×²¿Ê±±£³Ö3ĞĞ¾àÀë
+" å…‰æ ‡ç§»åŠ¨åˆ°bufferçš„é¡¶éƒ¨å’Œåº•éƒ¨æ—¶ä¿æŒ3è¡Œè·ç¦»
 set scrolloff=3
 
-" ²»ÒªÉÁË¸
+" ä¸è¦é—ªçƒ
 set novisualbell
 
-" ÎÒµÄ×´Ì¬ĞĞÏÔÊ¾µÄÄÚÈİ£¨°üÀ¨ÎÄ¼şÀàĞÍºÍ½âÂë£©
+" æˆ‘çš„çŠ¶æ€è¡Œæ˜¾ç¤ºçš„å†…å®¹ï¼ˆåŒ…æ‹¬æ–‡ä»¶ç±»å‹å’Œè§£ç ï¼‰
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
-" ×ÜÊÇÏÔÊ¾×´Ì¬ĞĞ
+" æ€»æ˜¯æ˜¾ç¤ºçŠ¶æ€è¡Œ
 " "set laststatus
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ÎÄ±¾¸ñÊ½ºÍÅÅ°æ
+" æ–‡æœ¬æ ¼å¼å’Œæ’ç‰ˆ
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ×Ô¶¯¸ñÊ½»¯
+" è‡ªåŠ¨æ ¼å¼åŒ–
 set formatoptions=tcrqn
 
-" ¼Ì³ĞÇ°Ò»ĞĞµÄËõ½ø·½Ê½£¬ÌØ±ğÊÊÓÃÓÚ¶àĞĞ×¢ÊÍ
+" ç»§æ‰¿å‰ä¸€è¡Œçš„ç¼©è¿›æ–¹å¼ï¼Œç‰¹åˆ«é€‚ç”¨äºå¤šè¡Œæ³¨é‡Š
 set autoindent
 
-" ÎªC³ÌĞòÌá¹©×Ô¶¯Ëõ½ø
+" ä¸ºCç¨‹åºæä¾›è‡ªåŠ¨ç¼©è¿›
 set smartindent
 
-" Ê¹ÓÃCÑùÊ½µÄËõ½ø
+" ä½¿ç”¨Cæ ·å¼çš„ç¼©è¿›
 set cindent
 
-" ÖÆ±í·ûÎª4
+" åˆ¶è¡¨ç¬¦ä¸º4
 set tabstop=4
 
-" Í³Ò»Ëõ½øÎª4
+" ç»Ÿä¸€ç¼©è¿›ä¸º4
 set softtabstop=4
 set shiftwidth=4
 
-" ²»ÒªÓÃ¿Õ¸ñ´úÌæÖÆ±í·û
+" ä¸è¦ç”¨ç©ºæ ¼ä»£æ›¿åˆ¶è¡¨ç¬¦
 set noexpandtab
 
-" ²»Òª»»ĞĞ
+" ä¸è¦æ¢è¡Œ
 set wrap
 set nu
-" ÔÚĞĞºÍ¶Î¿ªÊ¼´¦Ê¹ÓÃÖÆ±í·û
+" åœ¨è¡Œå’Œæ®µå¼€å§‹å¤„ä½¿ç”¨åˆ¶è¡¨ç¬¦
 set smarttab
 set smartcase
 set showcmd
@@ -163,19 +183,19 @@ set fo+=cr
 " Session options
 set sessionoptions=curdir,buffers,tabpages
 set foldcolumn=2
-"ÈÃvimrcĞŞ¸Äºó×Ô¶¯ÉúĞ§
+"è®©vimrcä¿®æ”¹åè‡ªåŠ¨ç”Ÿæ•ˆ
 "autocmd! bufwritepost .vimrc source ~/.vimrc
-"Ê¹µ±Ç°¹¤×÷Ä¿ÄÜ×Ô¶¯ÇĞ»»ÕıÔÚä¯ÀÀ»òÕß´ò¿ªÎÄ¼şµÄÄ¿Â¼
+"ä½¿å½“å‰å·¥ä½œç›®èƒ½è‡ªåŠ¨åˆ‡æ¢æ­£åœ¨æµè§ˆæˆ–è€…æ‰“å¼€æ–‡ä»¶çš„ç›®å½•
 "autocmd BufEnter * cd %:p:h
-"´¦Àípythonic style
+"å¤„ç†pythonic style
 "autocmd FileType python
 "set et nu sw=4 ts=4 list 
-"»òÕß set autochdir
+"æˆ–è€… set autochdir
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ö»ÔÚÏÂÁĞÎÄ¼şÀàĞÍ±»Õì²âµ½µÄÊ±ºòÏÔÊ¾ĞĞºÅ£¬ÆÕÍ¨ÎÄ±¾ÎÄ¼ş²»ÏÔÊ¾
+" åªåœ¨ä¸‹åˆ—æ–‡ä»¶ç±»å‹è¢«ä¾¦æµ‹åˆ°çš„æ—¶å€™æ˜¾ç¤ºè¡Œå·ï¼Œæ™®é€šæ–‡æœ¬æ–‡ä»¶ä¸æ˜¾ç¤º
 
 if has("autocmd")
 	" autocmd CursorHold * silent! exe printf( 'match Underlined /\<%s\>/', expand( '<cword>') )
@@ -191,7 +211,7 @@ if has("autocmd")
       \ endif
 endif " has("autocmd")
 
-" ÓÃ¿Õ¸ñ¼üÀ´¿ª¹ØÕÛµş
+" ç”¨ç©ºæ ¼é”®æ¥å¼€å…³æŠ˜å 
 set foldenable
 set foldmethod=manual
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -199,11 +219,11 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""" 
-"     ¼üÎ»°ó¶¨ Keys Bindings 
+"     é”®ä½ç»‘å®š Keys Bindings 
 " 
 """""""""""""""""""""""""""""""""""""""""""""""""""" 
 let mapleader = "."
-" °ó¶¨×Ô¶¯²¹È«µÄ¿ì½İ¼ü<C-X><C-O>µ½<leader>; 
+" ç»‘å®šè‡ªåŠ¨è¡¥å…¨çš„å¿«æ·é”®<C-X><C-O>åˆ°<leader>; 
 imap <leader>; <C-X><C-O> 
 map <C-F8> :call FormartSrc()<CR>   
 map <F5> :call CompileRun()<CR> 
@@ -290,9 +310,9 @@ set guioptions-=a
 endif 
 
 " CTRL-Z is Undo; not in cmdline though 
-noremap <C-Z> u 
-inoremap <C-Z> <C-O>u 
-
+"noremap <C-Z> u 
+"inoremap <C-Z> <C-O>u 
+ 
 " CTRL-Y is Redo (although not repeat); not in cmdline though 
 noremap <C-Y> <C-R> 
 inoremap <C-Y> <C-O><C-R> 
@@ -305,12 +325,13 @@ cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif 
 
 " CTRL-A is Select all 
-noremap <C-A> gggH<C-O>G 
+"noremap <C-A> gggH<C-O>G 
 inoremap <C-A> <C-O>gg<C-O>gH<C-O>G 
 cnoremap <C-A> <C-C>gggH<C-O>G 
 onoremap <C-A> <C-C>gggH<C-O>G 
 snoremap <C-A> <C-C>gggH<C-O>G 
 xnoremap <C-A> <C-C>ggVG 
+noremap <C-A> ggVG 
 
 " CTRL-Tab is Next window 
 noremap <C-Tab> <C-W>w 
@@ -324,9 +345,9 @@ inoremap <C-F4> <C-O><C-W>c
 cnoremap <C-F4> <C-C><C-W>c 
 onoremap <C-F4> <C-C><C-W>c 
 
-"ctagsÅäÖÃ
+"ctagsé…ç½®
 map <F12> :call Do_CsTag()<CR>
-function Do_CsTag()
+function! Do_CsTag()
     let dir = getcwd()
     if filereadable("tags")
         if(g:iswindows==1)
@@ -383,7 +404,7 @@ function Do_CsTag()
 endfunction 
 
 
-" ÓÃcscopeÖ§³Ö
+" ç”¨cscopeæ”¯æŒ
 set csprg=/usr/bin/cscope 
 let Tlist_Ctags_Cmd='/usr/bin/ctags' 
 let Tlist_Show_One_File=1 
@@ -391,23 +412,23 @@ let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Show_Menu=1
 let Tlist_Process_File_Always=1
-"Ä¬ÈÏ´ò¿ªTaglist 
+"é»˜è®¤æ‰“å¼€Taglist 
 "let Tlist_Auto_Open=1 
 nmap <silent> <leader>tl :Tlist<cr>
 
-" omni completion(È«ÄÜ²¹È«)
-" ÎªÖ§³ÖC++µÄÈ«ÄÜ²¹È«£¬Ğè°²×°²å¼ş: OmniCppComplete
-" ²¢ÇÒÉú³ÉtagÎÄ¼şµÄÃüÁîÊÇ(srcÎªÔ´ÎÄ¼şÄ¿Â¼): ctags -R --c++-kinds=+p --fields=+iaS --extra=+q src
-" ÒòÎªÔÚ¶ÔC++ÎÄ¼ş½øĞĞ²¹È«Ê±£¬OmniCppComplete²å¼şĞèÒªtagÎÄ¼şÖĞ°üº¬C++µÄ¶îÍâĞÅÏ¢
-" C++µÄ²¹È«Á¬¡±CTRL-X CTRL-O¡°¶¼²»±ØÊäÈëºÇºÇ£¬²âÊÔÍ¨¹ı
-set completeopt=longest,menu " Ö»ÔÚÏÂÀ­²Ëµ¥ÖĞÏÔÊ¾Æ¥ÅäÏîÄ¿£¬²¢ÇÒ»á×Ô¶¯²åÈëËùÓĞÆ¥ÅäÏîÄ¿µÄÏàÍ¬ÎÄ±¾
+" omni completion(å…¨èƒ½è¡¥å…¨)
+" ä¸ºæ”¯æŒC++çš„å…¨èƒ½è¡¥å…¨ï¼Œéœ€å®‰è£…æ’ä»¶: OmniCppComplete
+" å¹¶ä¸”ç”Ÿæˆtagæ–‡ä»¶çš„å‘½ä»¤æ˜¯(srcä¸ºæºæ–‡ä»¶ç›®å½•): ctags -R --c++-kinds=+p --fields=+iaS --extra=+q src
+" å› ä¸ºåœ¨å¯¹C++æ–‡ä»¶è¿›è¡Œè¡¥å…¨æ—¶ï¼ŒOmniCppCompleteæ’ä»¶éœ€è¦tagæ–‡ä»¶ä¸­åŒ…å«C++çš„é¢å¤–ä¿¡æ¯
+" C++çš„è¡¥å…¨è¿â€CTRL-X CTRL-Oâ€œéƒ½ä¸å¿…è¾“å…¥å‘µå‘µï¼Œæµ‹è¯•é€šè¿‡
+set completeopt=longest,menu " åªåœ¨ä¸‹æ‹‰èœå•ä¸­æ˜¾ç¤ºåŒ¹é…é¡¹ç›®ï¼Œå¹¶ä¸”ä¼šè‡ªåŠ¨æ’å…¥æ‰€æœ‰åŒ¹é…é¡¹ç›®çš„ç›¸åŒæ–‡æœ¬
 inoremap <C-J>  <C-X><C-O>
-" generic completion(ÆäËû²¹È«·½Ê½)
-" ÎÄ¼şÃû²¹È«
+" generic completion(å…¶ä»–è¡¥å…¨æ–¹å¼)
+" æ–‡ä»¶åè¡¥å…¨
 inoremap <C-F>  <C-X><C-F>
-" ºê¶¨Òå²¹È«
+" å®å®šä¹‰è¡¥å…¨
 inoremap <C-D>  <C-X><C-D>
-" ÕûĞĞ²¹È«
+" æ•´è¡Œè¡¥å…¨
 inoremap <C-L>  <C-X><C-L>
 let OmniCpp_MayCompleteDot = 1 " autocomplete with .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
@@ -415,15 +436,15 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
 let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
 let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
-"ÉèÖÃtagsÄ¿Â¼£¬¿ÉÒÔ¸ù¾İ×Ô¼ºµÄÉèÖÃ×Ô¶¯µ÷Õû 
+"è®¾ç½®tagsç›®å½•ï¼Œå¯ä»¥æ ¹æ®è‡ªå·±çš„è®¾ç½®è‡ªåŠ¨è°ƒæ•´ 
 "set tags+=~/.vim/tags
 "set tags+=~/.vim/cpptags 
 
 
-" WinManagerÉèÖÃ
-" ÕâÀï¿ÉÒÔÉèÖÃÎª¶à¸ö´°¿Ú, Èç'FileExplorer|BufExplorer|TagList'
+" WinManagerè®¾ç½®
+" è¿™é‡Œå¯ä»¥è®¾ç½®ä¸ºå¤šä¸ªçª—å£, å¦‚'FileExplorer|BufExplorer|TagList'
 let g:winManagerWindowLayout='BufExplorer,FileExplorer|TagList'
-"Ö»Ê£Ò»¸ö´°¿ÚÊ±, ÍË³övim.
+"åªå‰©ä¸€ä¸ªçª—å£æ—¶, é€€å‡ºvim.
 let g:persistentBehaviour=0
 let g:winManagerWidth=20
 let g:defaultExplorer=2
@@ -431,23 +452,23 @@ nmap wm :WMToggle<cr>
 nmap <silent> <leader>ft :FirstExplorerWindow<cr>
 nmap <silent> <leader>bt :BottomExplorerWindow<cr>
 
-" minibufexpl²å¼şµÄÒ»°ãÉèÖÃ
+" minibufexplæ’ä»¶çš„ä¸€èˆ¬è®¾ç½®
 let g:miniBufExplMapWindowNavArrows = 1
 "let g:miniBufExplModSelTarget = 1
-"ÊµÏÖ<C-Tab>     ÏòÇ°Ñ­»·ÇĞ»»µ½Ã¿¸öbufferÉÏ,²¢ÔÚµ±Ç°´°¿Ú´ò¿ª
+"å®ç°<C-Tab>     å‘å‰å¾ªç¯åˆ‡æ¢åˆ°æ¯ä¸ªbufferä¸Š,å¹¶åœ¨å½“å‰çª—å£æ‰“å¼€
 let g:miniBufExplMapCTabSwitchBufs = 1
-"<C-S-Tab>     ÏòºóÑ­»·ÇĞ»»µ½Ã¿¸öbufferÉÏ,²¢ÔÚµ±Ç°´°¿Ú´ò¿ª
-"¿ÉÒÔÓÃ<C-h,j,k,l>ÇĞ»»µ½ÉÏÏÂ×óÓÒµÄ´°¿ÚÖĞÈ¥
+"<C-S-Tab>     å‘åå¾ªç¯åˆ‡æ¢åˆ°æ¯ä¸ªbufferä¸Š,å¹¶åœ¨å½“å‰çª—å£æ‰“å¼€
+"å¯ä»¥ç”¨<C-h,j,k,l>åˆ‡æ¢åˆ°ä¸Šä¸‹å·¦å³çš„çª—å£ä¸­å»
 let g:miniBufExplMapWindowNavVim = 1
 map <Leader>b :MiniBufExplorer<cr>
 
 " SuperTab
-" ¼Ç×¡ÉÏ´ÎµÄ²¹È«·½Ê½£¬Ö±µ½°´ESCÍË³ö²åÈëÄ£Ê½ÎªÖ¹
+" è®°ä½ä¸Šæ¬¡çš„è¡¥å…¨æ–¹å¼ï¼Œç›´åˆ°æŒ‰ESCé€€å‡ºæ’å…¥æ¨¡å¼ä¸ºæ­¢
 let g:SuperTabRetainCompletionType = 2
-" È±Ê¡µÄ²¹È«·½Ê½(ÉèÖÃÎªÈ«ÄÜ²¹È«)
+" ç¼ºçœçš„è¡¥å…¨æ–¹å¼(è®¾ç½®ä¸ºå…¨èƒ½è¡¥å…¨)
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 
-"Ê¹ÓÃ<leader>e´ò¿ªµ±Ç°ÎÄ¼şÍ¬Ä¿Â¼ÖĞµÄÎÄ¼ş
+"ä½¿ç”¨<leader>eæ‰“å¼€å½“å‰æ–‡ä»¶åŒç›®å½•ä¸­çš„æ–‡ä»¶
 if has("unix")
 map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 else
@@ -461,10 +482,10 @@ colo darkblue
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""" 
-"     ÊµÓÃº¯Êı¶¨Òå Useful functions 
+"     å®ç”¨å‡½æ•°å®šä¹‰ Useful functions 
 " 
 """""""""""""""""""""""""""""""""""""""""""""""""""" 
-function MoveTabLeft() 
+function! MoveTabLeft() 
     let current_tab = tabpagenr() 
    if current_tab > 1 
        let current_tab = current_tab - 2 
@@ -472,16 +493,16 @@ function MoveTabLeft()
     endif 
 endfunction 
  
-function MoveTabRight() 
+function! MoveTabRight() 
     let current_tab = tabpagenr() 
     execute 'tabmove' current_tab 
 endfunction 
  
  
  
-func FormartSrc() 
+func! FormartSrc() 
         exec "w" 
-        "C³ÌĞò,Perl³ÌĞò,Python³ÌĞò 
+        "Cç¨‹åº,Perlç¨‹åº,Pythonç¨‹åº 
         if &filetype == 'c' 
                 exec "!astyle --style=ansi --suffix=none %" 
                 exec "e! %" 
@@ -494,7 +515,7 @@ func FormartSrc()
         elseif &filetype == 'py' 
                 exec "!astyle --style=ansi --suffix=none %" 
                 exec "e! %" 
-        "Java³ÌĞò 
+        "Javaç¨‹åº 
         elseif &filetype == 'java' 
                 exec "!astyle --style=java --suffix=none %" 
                 exec "e! %" 
@@ -512,57 +533,57 @@ func FormartSrc()
                 exec "e! %" 
         endif 
 endfunc 
-" ½áÊø¶¨ÒåFormartSrc 
+" ç»“æŸå®šä¹‰FormartSrc 
  
-" ¶¨ÒåCompileRunº¯Êı£¬ÓÃÀ´µ÷ÓÃ½øĞĞ±àÒëºÍÔËĞĞ 
-func CompileRun() 
+" å®šä¹‰CompileRunå‡½æ•°ï¼Œç”¨æ¥è°ƒç”¨è¿›è¡Œç¼–è¯‘å’Œè¿è¡Œ 
+func! CompileRun() 
         exec "w" 
-        "C³ÌĞò 
+        "Cç¨‹åº 
         if &filetype == 'c' 
                 exec "!gcc % -g -o %<" 
                 exec "!./%<" 
         elseif &filetype == 'cpp' 
                 exec "!g++ % -g -o %<" 
                 exec "!./%<" 
-        "Java³ÌĞò 
+        "Javaç¨‹åº 
         elseif &filetype == 'java' 
                 exec "!javac %" 
                 exec "!java %<" 
-        "Perl³ÌĞò 
+        "Perlç¨‹åº 
         elseif &filetype == 'pl' 
                 exec "!perl %<" 
-        "Python³ÌĞò 
+        "Pythonç¨‹åº 
         elseif &filetype == 'py' 
                 exec "!python %<CR>" 
-        "TexÎÄµµ 
+        "Texæ–‡æ¡£ 
         elseif &filetype == 'tex' 
                 exec "!latex %" 
                 exec "!dvipdf %<.dvi" 
                 exec "!evince %<.pdf" 
         endif 
 endfunc 
-"½áÊø¶¨ÒåCompileRun 
+"ç»“æŸå®šä¹‰CompileRun 
  
-"¶¨ÒåDebugº¯Êı£¬ÓÃÀ´µ÷ÊÔ³ÌĞò 
-func Debug() 
+"å®šä¹‰Debugå‡½æ•°ï¼Œç”¨æ¥è°ƒè¯•ç¨‹åº 
+func! Debug() 
         exec "w" 
-        "C³ÌĞò 
+        "Cç¨‹åº 
         if &filetype == 'c' 
                 exec "!gcc % -g -o %<" 
                 exec "!clewn -va %<.c" 
         elseif &filetype == 'cpp' 
                 exec "!gcc % -g -o %<" 
                 exec "!gdb %<" 
-        "Java³ÌĞò 
+        "Javaç¨‹åº 
         elseif &filetype == 'java' 
                 exec "!javac %" 
                 exec "!jdb %<" 
         endif 
 endfunc 
-"½áÊø¶¨ÒåDebug 
+"ç»“æŸå®šä¹‰Debug 
  
  
-"ÉèÖÃSession 
+"è®¾ç½®Session 
 function! GetMySession(spath, ssname) 
         if a:ssname == 0 
                 let a:sname = "" 
@@ -587,7 +608,7 @@ function! SetMySession(spath, ssname)
 endfunction 
  
 
-"À¨ºÅ×Ô¶¯²¹È«(NEW) 
+"æ‹¬å·è‡ªåŠ¨è¡¥å…¨(NEW) 
 "inoremap ( ()<Esc>:let char=" )" <CR>i
 "inoremap { {}<Esc>:let char=" }" <CR>i
 "inoremap [ []<Esc>:let char=" ]" <CR>i
@@ -651,7 +672,7 @@ function! ClosePair(char)
     endif 
 endf 
  
-func AutoSpace() 
+func! AutoSpace() 
  inoremap , ,<space>
 " inoremap ( (<space>
 " inoremap ) )<ESC>i<space><ESC>la
